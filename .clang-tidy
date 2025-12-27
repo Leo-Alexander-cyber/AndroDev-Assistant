@@ -1,0 +1,252 @@
+---
+# Clang-Tidy Configuration for AndroDev Assistant
+# Enterprise-grade static analysis ruleset
+
+# Check all available checks
+Checks: >- 
+  *, 
+  -abseil-*, 
+  -android-*, 
+  -clang-analyzer-*alpha*, 
+  -fuchsia-*, 
+  -google-*, 
+  -llvm-*, 
+  -objc-*, 
+  -readability-convert-member-functions-to-static,
+  -readability-else-after-return,
+  -readability-implicit-bool-cast,
+  -readability-magic-numbers,
+  -readability-redundant-access-specifiers,
+  -readability-uppercase-literal-suffix,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-special-member-functions,
+  -modernize-use-trailing-return-type,
+  -hicpp-uppercase-literal-suffix,
+  -hicpp-use-auto,
+  -hicpp-use-emplace,
+  -hicpp-no-array-decay
+
+# Treat all warnings as errors
+WarningsAsErrors: '*'
+
+# Header filter regex to include all headers
+HeaderFilterRegex: '.*'
+
+# Don't check system headers
+SystemHeaders: false
+
+# Clang-Tidy check options
+CheckOptions:
+  # C++ Core Guidelines options
+  - key: cppcoreguidelines-explicit-virtual-functions.IgnoreDestructors
+    value: 'true'
+  - key: cppcoreguidelines-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesPublic
+    value: 'true'
+  - key: cppcoreguidelines-avoid-magic-numbers.IgnoreConstantsBetweenZeroAndNine
+    value: 'true'
+  - key: cppcoreguidelines-avoid-magic-numbers.IgnoreMacros
+    value: 'true'
+  - key: cppcoreguidelines-avoid-magic-numbers.IgnoreNamedConstants
+    value: 'true'
+  - key: cppcoreguidelines-avoid-magic-numbers.IgnorePowersOf2
+    value: 'true'
+  - key: cppcoreguidelines-avoid-c-arrays.IncludeTypesWithFixedSizeArrayMember
+    value: 'true'
+  - key: cppcoreguidelines-owning-memory.LegacyResourceConsumers
+    value: '::std::FILE*;HANDLE'
+  - key: cppcoreguidelines-owning-memory.LegacyResourceProducers
+    value: '::fopen;::freopen;::tmpfile;::_wfopen;::_wfreopen;::_wtmpfile;::CreateFileA;::CreateFileW;::CreateFileMappingA;::CreateFileMappingW'
+
+  # Google C++ Style Guide options
+  - key: google-readability-braces-around-statements.ShortStatementLines
+    value: '1'
+  - key: google-readability-function-size.StatementThreshold
+    value: '80'
+  - key: google-readability-function-size.LineThreshold
+    value: '200'
+  - key: google-readability-namespace-comments.ShortNamespaceLines
+    value: '10'
+  - key: google-readability-namespace-comments.SpacesBeforeComments
+    value: '2'
+  - key: google-readability-todo-comments.WarnAtFileScope
+    value: 'true'
+
+  # Readability options
+  - key: readability-avoid-const-params-in-decls.IgnoreMacros
+    value: 'true'
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.FunctionCase
+    value: camelCase
+  - key: readability-identifier-naming.MemberCase
+    value: camelCase
+  - key: readability-identifier-naming.ParameterCase
+    value: camelCase
+  - key: readability-identifier-naming.VariableCase
+    value: camelCase
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: _
+  - key: readability-identifier-naming.StaticConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.StaticVariableCase
+    value: camelCase
+  - key: readability-inconsistent-declaration-parameter-name.IgnoreMacros
+    value: 'true'
+  - key: readability-misleading-indentation.IgnoreComments
+    value: 'true'
+  - key: readability-non-const-parameter.IgnoreMacros
+    value: 'true'
+  - key: readability-qualified-auto.AddConstToQualified
+    value: 'false'
+  - key: readability-redundant-declaration.IgnoreMacros
+    value: 'true'
+  - key: readability-simplify-boolean-expr.ChainedConditionalReturn
+    value: 'true'
+  - key: readability-simplify-boolean-expr.SimplifyDeMorgan
+    value: 'true'
+
+  # Modernize options
+  - key: modernize-avoid-bind.AllowBindWithCaptures
+    value: 'true'
+  - key: modernize-loop-convert.MinConfidence
+    value: 'reasonable'
+  - key: modernize-make-shared.IncludeStyle
+    value: 'llvm'
+  - key: modernize-make-unique.IncludeStyle
+    value: 'llvm'
+  - key: modernize-pass-by-value.IncludeStyle
+    value: 'llvm'
+  - key: modernize-raw-string-literal.ReplaceShorterLiterals
+    value: 'true'
+  - key: modernize-redundant-void-arg.IgnoreMacros
+    value: 'true'
+  - key: modernize-replace-auto-ptr.IncludeStyle
+    value: 'llvm'
+  - key: modernize-replace-disallow-copy-and-assign-macro.IncludeStyle
+    value: 'llvm'
+  - key: modernize-replace-random-shuffle.IncludeStyle
+    value: 'llvm'
+  - key: modernize-use-emplace.IncludeStyle
+    value: 'llvm'
+  - key: modernize-use-equals-default.IgnoreMacros
+    value: 'true'
+  - key: modernize-use-equals-delete.IgnoreMacros
+    value: 'true'
+  - key: modernize-use-nodiscard.ReplacementString
+    value: '[[nodiscard]]'
+  - key: modernize-use-noexcept.IgnoreMacros
+    value: 'true'
+  - key: modernize-use-noexcept.UseNoexceptFalse
+    value: 'true'
+  - key: modernize-use-transparent-functors.IncludeStyle
+    value: 'llvm'
+  - key: modernize-use-using.IgnoreMacros
+    value: 'true'
+
+  # Performance options
+  - key: performance-faster-string-find.StringLiteralThreshold
+    value: '3'
+  - key: performance-for-range-copy.WarnOnAllAutoCopies
+    value: 'true'
+  - key: performance-implicit-conversion-in-loop.Threshold
+    value: '10'
+  - key: performance-type-promotion-in-math-fn.IncludeFunctions
+    value: '::abs;::acos;::asin;::atan;::atan2;::ceil;::cos;::cosh;::exp;::fabs;::floor;::fmod;::frexp;::hypot;::ldexp;::log;::log10;::modf;::pow;::sin;::sinh;::sqrt;::tan;::tanh'
+  - key: performance-unnecessary-copy-initialization.AllowAllArgumentsSameType
+    value: 'false'
+
+  # Bugprone options
+  - key: bugprone-assert-side-effect.AssertMacros
+    value: 'assert;Q_ASSERT;QVERIFY;VERIFY;TEST_ASSERT'
+  - key: bugprone-branch-clone.CloneThreshold
+    value: '10'
+  - key: bugprone-copy-constructor-init.AllowedBaseClasses
+    value: ''
+  - key: bugprone-dangling-handle.HandleClasses
+    value: 'std::basic_string_view;std::span;std::experimental::basic_string_view;std::experimental::span'
+  - key: bugprone-exception-escape.FunctionsThatShouldNotThrow
+    value: 'std::nothrow_t;operator new;operator new[]'
+  - key: bugprone-forward-declaration-namespace.NamespaceOnlyForNameLookup
+    value: 'std'
+  - key: bugprone-implicit-widening-of-multiplication-result.WarnOnIntegerOverflow
+    value: 'true'
+  - key: bugprone-lambda-function-name.LambdaNameTemplate
+    value: 'lambda_{counter}'
+  - key: bugprone-move-forwarding-reference.CheckImplicitConversions
+    value: 'true'
+  - key: bugprone-narrowing-conversions.AllowExplicitScalarNarrowing
+    value: 'true'
+  - key: bugprone-reserved-identifier.CheckMacroDefinitionNames
+    value: 'true'
+  - key: bugprone-reserved-identifier.IncludeReservedMacroNames
+    value: 'true'
+  - key: bugprone-sizeof-expression.WarnOnSizeOfConstant
+    value: 'true'
+  - key: bugprone-string-constructor.WarnOnLargeDataLiteral
+    value: 'true'
+  - key: bugprone-string-literal-with-embedded-nul.WarnOnNonZeroNulInLiteral
+    value: 'true'
+  - key: bugprone-suspicious-memory-comparison.SizeThreshold
+    value: '16'
+  - key: bugprone-swapped-arguments.CheckParameterCount
+    value: 'true'
+  - key: bugprone-unchecked-optional-access.WarnOnUncheckedOptionalAccess
+    value: 'true'
+  - key: bugprone-unused-raii.CheckSmartPointers
+    value: 'true'
+  - key: bugprone-unused-return-value.CheckFunctionNames
+    value: '::std::async;::std::launder;::std::remove;::std::remove_if;::std::unique;::std::unique_ptr::release;::std::basic_string::empty;::std::vector::empty;::std::map::empty;::std::set::empty;::QString::isEmpty;::QList::isEmpty;::QVector::isEmpty'
+  - key: bugprone-unused-value.CheckFunctionsWithoutSideEffects
+    value: '::std::get;::std::hash::operator()'
+
+  # Miscellaneous options
+  - key: misc-definitions-in-headers.AllowExternC
+    value: 'true'
+  - key: misc-definitions-in-headers.AllowInline
+    value: 'true'
+  - key: misc-include-cleaner.IgnoreHeaders
+    value: '<algorithm>;<array>;<atomic>;<bitset>;<charconv>;<chrono>;<cinttypes>;<climits>;<cmath>;<compare>;<concepts>;<condition_variable>;<cstddef>;<cstdint>;<cstdio>;<cstdlib>;<cstring>;<ctime>;<cwchar>;<deque>;<exception>;<filesystem>;<format>;<forward_list>;<functional>;<future>;<initializer_list>;<iomanip>;<ios>;<iosfwd>;<iostream>;<istream>;<iterator>;<limits>;<list>;<locale>;<map>;<memory>;<mutex>;<new>;<numeric>;<optional>;<ostream>;<queue>;<random>;<ratio>;<regex>;<scoped_allocator>;<set>;<shared_mutex>;<sstream>;<stack>;<stdexcept>;<stop_token>;<streambuf>;<string>;<string_view>;<system_error>;<thread>;<tuple>;<type_traits>;<typeindex>;<typeinfo>;<unordered_map>;<unordered_set>;<utility>;<variant>;<vector>'
+  - key: misc-misplaced-widening-cast.CastTypes
+    value: 'char;short;int;long;long long;unsigned char;unsigned short;unsigned int;unsigned long;unsigned long long;float;double;long double'
+  - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesPublic
+    value: 'true'
+  - key: misc-non-private-member-variables-in-classes.IgnorePublicMemberVariables
+    value: 'false'
+  - key: misc-redundant-expression.RedundantExpressionGroups
+    value: 'true'
+  - key: misc-static-assert.MessageThreshold
+    value: '42'
+  - key: misc-throw-by-value-catch-by-reference.CheckThrowTemporaries
+    value: 'true'
+  - key: misc-unused-alias-decls.IgnoreMacros
+    value: 'true'
+  - key: misc-unused-parameters.IgnoreMacros
+    value: 'true'
+  - key: misc-unused-using-decls.IgnoreMacros
+    value: 'true'
+  - key: misc-use-anonymous-namespace.IncludeStyle
+    value: 'llvm'
+  - key: misc-use-enum-class.IgnoreMacros
+    value: 'true'
+  - key: misc-use-nodiscard.ReplacementString
+    value: '[[nodiscard]]'
+  - key: misc-use-std-print.IncludeStyle
+    value: 'llvm'
+  - key: misc-use-transparent-functors.IncludeStyle
+    value: 'llvm'
+
+# Line filter to include specific files
+LineFilter:
+  - name: '*.h'
+  - name: '*.cpp'
+
+# Format style
+FormatStyle: 'file'
+---

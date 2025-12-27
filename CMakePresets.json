@@ -1,0 +1,149 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "MinGW Makefiles",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "installDir": "${sourceDir}/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_STANDARD": "20",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF",
+        "BUILD_TESTING": "ON",
+        "ENABLE_COVERAGE": "OFF",
+        "ENABLE_STATIC_ANALYSIS": "ON",
+        "ENABLE_CLANG_TIDY": "ON",
+        "ENABLE_CPPCHECK": "ON"
+      }
+    },
+    {
+      "name": "debug",
+      "inherits": "base",
+      "displayName": "Debug",
+      "description": "Debug build with maximum debug information",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "OFF",
+        "ENABLE_COVERAGE": "ON"
+      }
+    },
+    {
+      "name": "release",
+      "inherits": "base",
+      "displayName": "Release",
+      "description": "Release build with maximum optimization",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON"
+      }
+    },
+    {
+      "name": "relwithdebinfo",
+      "inherits": "base",
+      "displayName": "RelWithDebInfo",
+      "description": "Release build with debug information",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON"
+      }
+    },
+    {
+      "name": "minsizerel",
+      "inherits": "base",
+      "displayName": "MinSizeRel",
+      "description": "Release build optimized for size",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "MinSizeRel",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "base",
+      "hidden": true
+    },
+    {
+      "name": "debug",
+      "inherits": "base",
+      "configurePreset": "debug",
+      "displayName": "Debug Build",
+      "targets": ["all"]
+    },
+    {
+      "name": "release",
+      "inherits": "base",
+      "configurePreset": "release",
+      "displayName": "Release Build",
+      "targets": ["all"]
+    },
+    {
+      "name": "relwithdebinfo",
+      "inherits": "base",
+      "configurePreset": "relwithdebinfo",
+      "displayName": "RelWithDebInfo Build",
+      "targets": ["all"]
+    },
+    {
+      "name": "minsizerel",
+      "inherits": "base",
+      "configurePreset": "minsizerel",
+      "displayName": "MinSizeRel Build",
+      "targets": ["all"]
+    },
+    {
+      "name": "debug-tests",
+      "inherits": "base",
+      "configurePreset": "debug",
+      "displayName": "Debug Build with Tests",
+      "targets": ["unit_tests"]
+    },
+    {
+      "name": "release-tests",
+      "inherits": "base",
+      "configurePreset": "release",
+      "displayName": "Release Build with Tests",
+      "targets": ["unit_tests"]
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "configurePreset": "debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "debug",
+      "inherits": "base",
+      "displayName": "Debug Tests",
+      "description": "Run tests for Debug build",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "release",
+      "inherits": "base",
+      "displayName": "Release Tests",
+      "description": "Run tests for Release build",
+      "configurePreset": "release"
+    },
+    {
+      "name": "debug-coverage",
+      "inherits": "base",
+      "displayName": "Debug Tests with Coverage",
+      "description": "Run tests for Debug build with coverage collection",
+      "configurePreset": "debug"
+    }
+  ]
+}
